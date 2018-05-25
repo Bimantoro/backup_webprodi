@@ -136,11 +136,24 @@ public $data 	= 	array();
 				$tgl_mulai=$this->input->post('tgl_mulai');
 				$tgl_selesai=$this->input->post('tgl_selesai');
 				$url = $this->input->post('url');
+
+				$temp_gambar = 0;
 				if(($_FILES["picture"]["type"] == "image/jpeg") or ($_FILES["picture"]["type"] == "image/pjpeg")){
 					$filename=$kode_unit.'_'.date('Ymd')."_".$_FILES['picture']['name'];
 					$vdir_upload = "./media/gambar/";
 					$vfile_upload = $vdir_upload . $filename;
 					move_uploaded_file($_FILES["picture"]["tmp_name"],"./media/gambar/" .$filename);
+
+					$im_src = getimagesize($vfile_upload);
+					//$src_width = imageSX($im_src);
+					//$src_height = imageSY($im_src);
+					$src_width = $im_src[0];
+					$src_height = $im_src[1];
+
+					if($src_width == 1170 AND $src_height >=480 AND $src_height < 490){
+						$temp_gambar = 1;
+					}
+
 					// $im_src = imagecreatefromjpeg($vfile_upload);
 					// $src_width = imageSX($im_src);
 					// $src_height = imageSY($im_src);
@@ -151,16 +164,19 @@ public $data 	= 	array();
 					$picture= $filename;
 					// imagejpeg($im,$vdir_upload .$picture);
 				}
+
 				if($picture !=null){
-				$data = array(
-				  'kode_unit'=>$kode_unit,
-				  'picture'=>$picture,
-				  'background'=>$background,
-				  'kode_bahasa'=>$bahasa,
-				  'tgl_mulai'=>$tgl_mulai,
-				  'tgl_selesai'=>$tgl_selesai,
-				  'url'=>$url
-				);
+					if($temp_gambar == 1){
+						$data = array(
+						  'kode_unit'=>$kode_unit,
+						  'picture'=>$picture,
+						  'background'=>$background,
+						  'kode_bahasa'=>$bahasa,
+						  'tgl_mulai'=>$tgl_mulai,
+						  'tgl_selesai'=>$tgl_selesai,
+						  'url'=>$url
+						);
+					}				
 				}else{
 				$data = array(
 				'kode_unit'=>$kode_unit,
@@ -172,10 +188,16 @@ public $data 	= 	array();
 				);
 				}
 						
-			if($this->db->where('id_slide',$id)->update('slide_2016',$data)){
-				$this->session->set_flashdata('msg', array('success', 'Data berhasil diperbaharui'));
+			if($temp_gambar == 0 && $picture != null){
+				$this->session->set_flashdata('msg', array('danger', 'Error, Gunakan ukuran file 1170 x 487 pixel'));
 				redirect('admin/slide/index');
-			};
+			}else{
+				if($this->db->where('id_slide',$id)->update('slide_2016',$data)){
+					$this->session->set_flashdata('msg', array('success', 'Data berhasil diperbaharui'));
+					redirect('admin/slide/index');
+				};
+			}
+			
 		}			
 	}
 	function delete($id=""){
