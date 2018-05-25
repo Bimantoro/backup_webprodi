@@ -140,9 +140,9 @@ public $data 	= 	array();
 				$temp_gambar = 0;
 				if(($_FILES["picture"]["type"] == "image/jpeg") or ($_FILES["picture"]["type"] == "image/pjpeg")){
 					$filename=$kode_unit.'_'.date('Ymd')."_".$_FILES['picture']['name'];
-					$vdir_upload = "./media/gambar/";
+					$vdir_upload = "./media/slide/";
 					$vfile_upload = $vdir_upload . $filename;
-					move_uploaded_file($_FILES["picture"]["tmp_name"],"./media/gambar/" .$filename);
+					move_uploaded_file($_FILES["picture"]["tmp_name"],"./media/slide/" .$filename);
 
 					$im_src = getimagesize($vfile_upload);
 					//$src_width = imageSX($im_src);
