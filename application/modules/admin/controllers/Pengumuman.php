@@ -81,6 +81,8 @@ class Pengumuman extends CI_Controller {
         $this->datatables->select("m1.id_pengumuman id_pengumuman,m1.nama_pengumuman nama_pengumuman,m1.nama_file nama_file,m1.url url,m1.tgl_posting tgl_posting")
         ->add_column('action', '$1','m1.id_pengumuman')
         ->from("pengumuman as m1")->where('kode_unit', $kode_unit);
+
+        $this->db->order_by("id_pengumuman", "desc");
 		/* ->join('berita as m2','m1.id_berita=m2.id_berita'); */
         
         echo $this->datatables->generate();

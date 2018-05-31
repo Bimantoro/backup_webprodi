@@ -67,6 +67,8 @@ class Dokumen extends CI_Controller {
         $this->datatables->select("m1.id_dokumen id_dokumen,m1.nama_dokumen nama_dokumen,m1.tahun tahun,m1.nama_file nama_file, m1.tgl_posting tgl_posting")
         ->add_column('action', '$1','m1.id_dokumen')
         ->from("dokumen as m1")->where('kode_unit', $kode_unit);
+
+        $this->db->order_by("id_dokumen", "desc");
 		/* ->join('berita as m2','m1.id_berita=m2.id_berita'); */
         
         echo $this->datatables->generate();
@@ -82,7 +84,23 @@ class Dokumen extends CI_Controller {
 			$nama_dokumen=$this->input->post('nama_dokumen');
 			$tahun=$this->input->post('tahun');
 			$bahasa=$this->input->post('bahasa');
-			$tgl_posting = date('Y-m-d H:i:s');
+			$temp_tgl_posting = $this->input->post('tanggal_post');
+
+			if($temp_tgl_posting != ''){
+				// conver tanggal : 			
+				$tmp_t = explode('/',$temp_tgl_posting);
+				$tmp_abc = $tmp_t[0];
+				$tmp_t[0] = $tmp_t[2];
+				$tmp_t[2] = $tmp_abc;
+
+				$tmp_t = implode('-', $tmp_t);
+				$curr_time = date('H:i:s');
+
+				$tgl_posting = $tmp_t.' '.$curr_time;
+			}else{
+				$tgl_posting = date('Y-m-d H:i:s');
+			}
+			
 			$filename=$kode_unit.'_'.date('Ymd')."_".$_FILES['nama_file']['name'];
 			if ($_FILES['nama_file']['size']==0) {
 				$this->session->set_flashdata('error','File tidak boleh kosong atau lebih dari 2 MB!');

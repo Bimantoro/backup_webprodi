@@ -22,7 +22,21 @@ class Login extends CI_Controller {
 		//$cek_user = $this->Page_model->cek_user_univ($user);
 		// print($cek_user);
 		// die();
+
+		//ini kayaknya cuman sementara :
+		$status_login_adm = 0;
 		if(!empty($cek_user)){
+			$d=explode('.',str_replace('http://','',base_url()));
+			$dom=$d[0];
+
+			if($cek_user['subdomain'] == $dom){
+				$status_login_adm = 1;
+			}
+		}
+
+
+
+		if(!empty($cek_user) && $status_login_adm == 1){
 			$data = array(
 						'username' => $cek_user['username'],
 						'kode_unit' => $cek_user['kode_unit'],

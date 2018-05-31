@@ -32,7 +32,7 @@
 	<div class="form-group">
 		<label class="col-md-3" for="tanggal_post">Tanggal</label>
 		<div class="col-md-6">
-			<input class="form-control" name="tanggal_post" id="tanggal_post" type="text">
+			<input class="form-control" name="tanggal_post" id="tanggal_post" type="text" autocomplete="off">
 			<label style="color:red;" class="ml-xl">Jika kosong akan terisi tanggal saat ini.</label>
 		</div>
 	</div>

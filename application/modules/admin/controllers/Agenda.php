@@ -19,7 +19,8 @@ class Agenda extends CI_Controller {
 			),	
 		);
 	}
- 
+
+
    public function index($uri=0){
 		$data['title']="Agenda";
 		$data['json_url']=site_url('admin/agenda/menu_json');
@@ -74,8 +75,8 @@ class Agenda extends CI_Controller {
 	function add_agenda(){
 		if($_POST==null){
 			$data=$this->data;
-			//$ruang=$this->page_model->get_api('simar_general/cari_ruang', 'json', 'POST', array('api_kode'=>1001, 'api_subkode'=>2));
-			$ruang = null;
+			$ruang=$this->page_model->get_api('simar_general/cari_ruang', 'json', 'POST', array('api_kode'=>1001, 'api_subkode'=>2));
+			//$ruang = null;
 			$data['ruang'] = $ruang;
 			$data['title']="Input Agenda";
 			/* $data['parent']=$this->db->get_where('menu',array('parent'=>0))->result(); */
@@ -96,12 +97,50 @@ class Agenda extends CI_Controller {
 			$jp = $this->input->post('jam_posting');
 			$jm = $this->input->post('jam_mulai');
 			$js = $this->input->post('jam_selesai');
-			$tgl_mulai= date(''.$tgm.' '.$jm.'');
-			$tgl_selesai= date(''.$tgs.' '.$js.'');
-			$tgl_posting= date(''.$tgp.' '.$jp.'');
-			$tgl_posting= date($tgl_posting);
-			$tgl_mulai= date($tgl_mulai);
-			$tgl_selesai= date($tgl_selesai);
+
+
+			$tmp_tgm = explode('/', $tgm);
+			$tmp_tgs = explode('/', $tgs);
+			
+
+			$tmp_ = $tmp_tgm[0];
+			$tmp_tgm[0] = $tmp_tgm[2];
+			$tmp_tgm[2] = $tmp_;
+
+			$tgm = implode('-', $tmp_tgm);
+
+			$tgl_mulai = $tgm.' '.$jm.':00';
+
+			$tmp_ = $tmp_tgs[0];
+			$tmp_tgs[0] = $tmp_tgs[2];
+			$tmp_tgs[2] = $tmp_;
+
+			$tgs = implode('-', $tmp_tgs);
+
+			$tgl_selesai = $tgs.' '.$js.':00';
+
+			if($tgp != null || $tgp != ''){
+					$tmp_tgp = explode('/', $tgp);
+				$tmp_ = $tmp_tgp[0];
+				$tmp_tgp[0] = $tmp_tgp[2];
+				$tmp_tgp[2] = $tmp_;
+
+				$tgp = implode('-', $tmp_tgp);
+
+				$tgl_posting = $tgp.' '.date('H:i:s');
+			}else{
+				$tgl_posting = date('Y-m-d H:i:s');
+			}
+			
+
+
+
+			// $tgl_mulai= date(''.$tgm.' '.$jm.'');
+			// $tgl_selesai= date(''.$tgs.' '.$js.'');
+			// $tgl_posting= date(''.$tgp.' '.$jp.'');
+			// $tgl_posting= date($tgl_posting);
+			// $tgl_mulai= date($tgl_mulai);
+			// $tgl_selesai= date($tgl_selesai);
 			$filename=$kode_unit.'_'.date('Ymd')."_".$_FILES['nama_file']['name'];
 			move_uploaded_file($_FILES["nama_file"]["tmp_name"],"./media/gambar/".$filename);
 			$data=array(

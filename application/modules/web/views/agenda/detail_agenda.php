@@ -72,7 +72,7 @@
 			<h4>Agenda Terkait</h4>
 			<ul class="list list-icons list-icons-sm">
 			<?php foreach($rec as $r):?>
-				<li><a href="<?php echo site_url('web/agenda/detail/'.$r->id_agenda.'/'.url_title(strtolower($r->nama_agenda))) ?>"><i class="fa fa-caret-right"></i> <?php echo $r->nama_agenda ?></a></li>
+				<li><a href="<?php echo site_url($lang.'/agenda/detail/'.$r->id_agenda.'/'.url_title(strtolower($r->nama_agenda))) ?>"><i class="fa fa-caret-right"></i> <?php echo $r->nama_agenda ?></a></li>
 			<?php endforeach ?>
 			</ul>				
 		</div>
@@ -82,7 +82,7 @@
 			<ul class="list list-icons list-icons-sm">
 			<?php
 			foreach($pop as $r){?>
-				<li><a href="<?php echo site_url('web/agenda/detail/'.$r->id_agenda.'/'.url_title(strtolower($r->nama_agenda))) ?>"><i class="fa fa-caret-right"></i><?php echo $r->nama_agenda ?></a>
+				<li><a href="<?php echo site_url($lang.'/agenda/detail/'.$r->id_agenda.'/'.url_title(strtolower($r->nama_agenda))) ?>"><i class="fa fa-caret-right"></i><?php echo $r->nama_agenda ?></a>
 				<br><span style="font-size:80%"><?php echo tgl_artikel($d->tgl_posting)?></span>
 				</li>
 			<?php } ?>

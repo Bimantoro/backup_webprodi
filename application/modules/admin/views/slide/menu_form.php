@@ -1,3 +1,6 @@
+<script type="text/javascript" src="<?php echo base_url('asset/js2/jquery-3.2.1.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/js2/jquery-ui.js') ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/js2/jquery-ui.css') ?>">
 
 <?php $a=$this->session->flashdata('msg');
 	if($a!=null):?>
@@ -41,13 +44,13 @@
 	<div class="form-group">
 		<label class="col-md-3" for="deskripsi_foto">Tanggal Mulai</label>
 		<div class="col-md-6">
-			<input type="date" name="tgl_mulai" id="tgl_mulai"/>
+			<input type="text" required autocomplete="off" class="form-control" name="tgl_mulai" id="tgl_mulai"/>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-md-3" for="deskripsi_foto">Tanggal Selesai</label>
 		<div class="col-md-6">
-			<input type="date" name="tgl_selesai" id="tgl_selesai"/>
+			<input type="text" required autocomplete="off" class="form-control" name="tgl_selesai" id="tgl_selesai"/>
 		</div>
 	</div>
 	<div class="form-group">
@@ -64,3 +67,13 @@
 	</div>
 	
 </form>
+
+<script type="text/javascript">
+	$('#tgl_mulai').datepicker({
+		dateFormat : 'dd/mm/yy'
+	});
+
+	$('#tgl_selesai').datepicker({
+		dateFormat : 'dd/mm/yy'
+	});
+</script>

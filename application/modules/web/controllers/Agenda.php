@@ -29,7 +29,8 @@ class agenda extends CI_Controller {
    public function detail($id=0){
       $get_data = $this->db->get_where("agenda",array('id_agenda'=>$id));
 		$agenda = $get_data->row();
-		$kode_unit = $this->session->userdata('kode_unit');
+		// $kode_unit = $this->session->userdata('kode_unit');
+		//$kode_unit = $this->page_model->get_session_unit();
 		if($get_data->num_rows()>0){
 		 	$this->breadcrumb->append_crumb('Beranda', base_url());
 			$this->breadcrumb->append_crumb('Agenda', site_url($this->lang.'/agenda'));
@@ -40,9 +41,14 @@ class agenda extends CI_Controller {
 			$data['d'] = $this->db->get_where('agenda',array('id_agenda'=>$id))->row();
 			$arr_filter=array();
 			$arr_filter=related_text($agenda->nama_agenda);	
-			$filter	="kode_unit = ".$kode_unit." AND id_agenda <> '".$id."' AND  (nama_agenda LIKE '%".rtrim(implode("%' OR nama_agenda LIKE '%",$arr_filter)," OR nama_agenda LIKE '%")."%')";
-			// $data['rec']=$this->db->query("SELECT id_agenda,nama_agenda,tgl_posting from agenda WHERE ".$filter."  ORDER BY tgl_posting desc LIMIT 0,5")->result();
-			// $data['pop']=$this->db->query("SELECT id_agenda,nama_agenda,tgl_posting from agenda where kode_unit=".$kode_unit." ORDER BY counter desc LIMIT 0,5")->result();
+			$filter	="id_agenda <> '".$id."' AND  (nama_agenda LIKE '%".rtrim(implode("%' OR nama_agenda LIKE '%",$arr_filter)," OR nama_agenda LIKE '%")."%')";
+			//print_r($this->session->all_userdata()); die();
+
+
+			 //$data['rec']=$this->db->query("SELECT id_agenda,nama_agenda,tgl_posting from agenda WHERE ".$filter."  ORDER BY tgl_posting desc LIMIT 0,5")->result();
+			 //$data['pop']=$this->db->query("SELECT id_agenda,nama_agenda,tgl_posting from agenda where kode_unit=".$kode_unit." ORDER BY counter desc LIMIT 0,5")->result();
+
+
 
 			$data['rec']=$this->page_model->get_agenda_terkait($filter, 0, 5);
 			$data['pop']=$this->page_model->get_agenda_terpopuler(0, 5);

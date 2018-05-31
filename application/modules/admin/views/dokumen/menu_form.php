@@ -1,6 +1,10 @@
+<script type="text/javascript" src="<?php echo base_url('asset/js2/jquery-3.2.1.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/js2/jquery-ui.js') ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/js2/jquery-ui.css') ?>">
+
 <form class="form-horizontal form-bordered" method="post" action="" enctype='multipart/form-data' >
-	<?php 	 $error = $this->session->flashdata('error'); 
-	if(isset($error)){?>
+	<?php 	 $error = $this->session->flashdata('error'); 	
+	if(!empty($error)){?>
 	<div class="alert alert-danger">
 		<?php 	echo $error;?>
 	</div><?php } ?>
@@ -28,6 +32,15 @@
 			<input class="form-control" name="tahun" id="tahun" type="text">
 		</div>
 	</div>
+
+	<div class="form-group">
+		<label class="col-md-3 control-label" for="tanggal_post">Tanggal</label>
+		<div class="col-md-6">
+			<input class="form-control" name="tanggal_post" id="tanggal_post" type="text" autocomplete="off">
+			<label style="color:red;" class="ml-xl">Jika kosong akan terisi tanggal saat ini.</label>
+		</div>
+	</div>
+
 	<div class="form-group">
 		<label class="col-md-3 control-label" for="nama_file">Pilih File</label>
 		<div class="col-md-6">
@@ -42,3 +55,9 @@
 	</div>
 
 </form>
+
+<script type="text/javascript">
+	$('#tanggal_post').datepicker({
+		dateFormat : 'dd/mm/yy'
+	});
+</script>

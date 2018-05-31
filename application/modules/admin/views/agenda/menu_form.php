@@ -1,3 +1,10 @@
+<script type="text/javascript" src="<?php echo base_url('asset/js2/jquery-3.2.1.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/js2/jquery-ui.js') ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/js3/jquery.timepicker.min.js') ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/js2/jquery-ui.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/js3/jquery.timepicker.min.css') ?>">
+
+
 	<script>
 
 		$(function(){
@@ -66,26 +73,26 @@
 	<div class="form-group">
 		<label class="col-md-3 control-label" for="tgl_posting">Tanggal Posting</label>
 		<div class="col-md-6">
-			<input class="form-control" name="tgl_posting" id="tgl_posting" type="date" >
+			<input class="form-control" name="tgl_posting" id="tgl_posting" type="text" autocomplete="off">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-md-3 control-label" for="tgl_mulai">Tanggal Mulai</label>
 		<div class="col-md-6">
-			<input class="form-control" name="tgl_mulai" id="tgl_mulai" type="date" >
+			<input class="form-control" name="tgl_mulai" id="tgl_mulai" type="text" required autocomplete="off">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-md-3 control-label" for="tgl_selesai">Tanggal Selesai</label>
 		<div class="col-md-6">
-			<input class="form-control" name="tgl_selesai" id="tgl_selesai" type="date">
+			<input class="form-control" name="tgl_selesai" id="tgl_selesai" type="text" required autocomplete="off">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-md-3 control-label" for="jam_mulai">Jam</label>
 		<div class="col-md-6 input-append bootstrap-timepicker">
-			<input id="jam_mulai" name="jam_mulai" class="input-small" value="<?php if(isset($jam_mulai)){ echo $jam_mulai; }else{ echo "08:00:00"; }?>" type="time"/><span class="add-on"><i class="icon-time"></i></span> - 
-			<input id="jam_selesai" name="jam_selesai" class="input-small" value="<?php if(isset($jam_selesai)){ echo $jam_selesai; }else{ echo "08:00:00"; }?>"  type="time"/><span class="add-on"><i class="icon-time"></i></span>
+			<input required autocomplete="off" id="jam_mulai" name="jam_mulai" class="input-small" style="width: 100px; text-align: center;" value="<?php if(isset($jam_mulai)){ echo $jam_mulai; }else{ echo "08:00"; }?>" type="text"/><span class="add-on"><i class="icon-time"></i></span> - 
+			<input required autocomplete="off" id="jam_selesai" name="jam_selesai" class="input-small" style="width: 100px; text-align: center;" value="<?php if(isset($jam_selesai)){ echo $jam_selesai; }else{ echo "08:00"; }?>"  type="text"/><span class="add-on"><i class="icon-time"></i></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -102,3 +109,24 @@
 	</div>
 
 </form>
+
+<script type="text/javascript">
+	$('#tgl_posting').datepicker({
+		dateFormat : 'dd/mm/yy'
+	});
+
+	$('#tgl_mulai').datepicker({
+		dateFormat : 'dd/mm/yy'
+	});
+
+	$('#tgl_selesai').datepicker({
+		dateFormat : 'dd/mm/yy'
+	});
+
+	$('#jam_mulai').timepicker({
+		timeFormat : 'HH:mm'
+	});
+	$('#jam_selesai').timepicker({
+		timeFormat : 'HH:mm'
+	});
+</script>

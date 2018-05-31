@@ -7,7 +7,7 @@ class Dokumen extends CI_Controller {
 		$this->load->helper('format_tanggal');
 		$this->load->helper('text_manipulation');
 		$this->load->library('pagination');
-		$this->load->library('breadcrumb');
+		//$this->load->library('breadcrumb');
 		$this->load->model('web/page_model');
 	}
  

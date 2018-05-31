@@ -66,6 +66,8 @@ public $data 	= 	array();
         $this->datatables->select("m1.id_berita id_berita,m1.judul judul,m1.isi isi,m1.ringkasan ringkasan, m1.foto foto, m1.tgl_posting tgl_posting")
         ->add_column('action', '$1','m1.id_berita')
         ->from("berita as m1")->where('kode_unit', $kode_unit);
+
+        $this->db->order_by("id_berita", "desc");
 		/* ->join('berita as m2','m1.id_berita=m2.id_berita'); */
         echo $this->datatables->generate();
     }
@@ -107,23 +109,24 @@ public $data 	= 	array();
 					$vdir_upload = "./media/gambar/";
 					$vfile_upload = $vdir_upload . $filename;
 					move_uploaded_file($_FILES["photo"]["tmp_name"],"./media/gambar/" .$filename);
-					// $im_src = imagecreatefromjpeg($vfile_upload);
-					// $src_width = imageSX($im_src);
-					// $src_height = imageSY($im_src);
+					$im_src = imagecreatefromjpeg($vfile_upload);
+					$src_width = imageSX($im_src);
+					$src_height = imageSY($im_src);
 
-					$im_src = getimagesize($vfile_upload);
-					$src_width = $im_src[0];
-					$src_height = $im_src[1];
-					// if($src_width > 550){
-					// 	$dst_width = 550;
-					// 	$dst_height = ($dst_width/$src_width)*$src_height;
-					// 	$im = imagecreatetruecolor($dst_width,$dst_height);
-					// }else{
-					// 	$im = imagecreatetruecolor($src_width,$src_height);
-					// }
-					// imagecopyresampled($im, $im_src, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
+					// $im_src = getimagesize($vfile_upload);
+					// $src_width = $im_src[0];
+					// $src_height = $im_src[1];
+					
+					if($src_width > 550){
+						$dst_width = 550;
+						$dst_height = ($dst_width/$src_width)*$src_height;
+						$im = imagecreatetruecolor($dst_width,$dst_height);
+					}else{
+						$im = imagecreatetruecolor($src_width,$src_height);
+					}
+					imagecopyresampled($im, $im_src, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
 					$photo=$filename;
-					// imagejpeg($im,$vdir_upload .$photo);
+					imagejpeg($im,$vdir_upload .$photo);
 				}
 			/* $mo=$this->db->query("SELECT COALESCE(MAX(menu_order),0)+1 cur_order FROM menu WHERE parent='".$parent."'")->row(); */
 			$data=array(
@@ -163,15 +166,15 @@ public $data 	= 	array();
 					$vdir_upload = "./media/gambar/";
 					$vfile_upload = $vdir_upload . $filename;
 					move_uploaded_file($_FILES["photo"]["tmp_name"],"./media/gambar/" .$filename);
-					// $im_src = imagecreatefromjpeg($vfile_upload);
-					// $src_width = imageSX($im_src);
-					// $src_height = imageSY($im_src);
-					// $dst_width = 550;
-					// $dst_height = ($dst_width/$src_width)*$src_height;
-					// $im = imagecreatetruecolor($dst_width,$dst_height);
-					// imagecopyresampled($im, $im_src, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
+					$im_src = imagecreatefromjpeg($vfile_upload);
+					$src_width = imageSX($im_src);
+					$src_height = imageSY($im_src);
+					$dst_width = 550;
+					$dst_height = ($dst_width/$src_width)*$src_height;
+					$im = imagecreatetruecolor($dst_width,$dst_height);
+					imagecopyresampled($im, $im_src, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
 					$photo= $filename;
-					// imagejpeg($im,$vdir_upload .$photo);
+					imagejpeg($im,$vdir_upload .$photo);
 				}
 				if($photo !=null){
 				$data = array(

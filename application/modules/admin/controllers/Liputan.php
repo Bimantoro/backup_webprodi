@@ -60,6 +60,8 @@ class Liputan extends CI_Controller {
         ->add_column('action', '$1','m1.id_liputan')
         ->from("liputan as m1")
         ->where('kode_unit', $this->session->userdata('kode_unit'));
+
+        $this->db->order_by("id_liputan", "desc");
 		/* ->join('berita as m2','m1.id_berita=m2.id_berita'); */
         
         echo $this->datatables->generate();
@@ -150,15 +152,15 @@ class Liputan extends CI_Controller {
 					$vdir_upload = "./files/berita/";
 					$vfile_upload = $vdir_upload . $filename;
 					move_uploaded_file($_FILES["photo"]["tmp_name"],"./media/gambar/" . $_FILES["photo"]["name"]);
-					$im_src = imagecreatefromjpeg($vfile_upload);
-					$src_width = imageSX($im_src);
-					$src_height = imageSY($im_src);
-					$dst_width = 550;
-					$dst_height = ($dst_width/$src_width)*$src_height;
-					$im = imagecreatetruecolor($dst_width,$dst_height);
-					imagecopyresampled($im, $im_src, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
+					// $im_src = imagecreatefromjpeg($vfile_upload);
+					// $src_width = imageSX($im_src);
+					// $src_height = imageSY($im_src);
+					// $dst_width = 550;
+					// $dst_height = ($dst_width/$src_width)*$src_height;
+					// $im = imagecreatetruecolor($dst_width,$dst_height);
+					// imagecopyresampled($im, $im_src, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
 					$photo= $filename;
-					imagejpeg($im,$vdir_upload .$photo);
+					// imagejpeg($im,$vdir_upload .$photo);
 				}
 				if($photo !=null){
 				$data = array(

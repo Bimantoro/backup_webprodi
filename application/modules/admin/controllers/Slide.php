@@ -60,6 +60,8 @@ public $data 	= 	array();
         $this->datatables->select("m1.id_slide id_slide,m1.picture picture,m1.background background,m1.tgl_mulai tgl_mulai,m1.tgl_selesai tgl_selesai, m1.url url, m1.kode_bahasa kode_bahasa")
         ->add_column('action', '$1','m1.id_slide')
         ->from("slide_2016 as m1")->where('kode_unit', $kode_unit);
+
+        $this->db->order_by("id_slide", "desc");
 		/* ->join('slide as m2','m1.id_slide=m2.id_slide'); */
         echo $this->datatables->generate();
     }
@@ -79,6 +81,28 @@ public $data 	= 	array();
 			$tgl_mulai=$this->input->post('tgl_mulai');
 			$tgl_selesai=$this->input->post('tgl_selesai');
 			$url = $this->input->post('url');
+
+			$temp_tgl_mulai = explode('/', $tgl_mulai);
+			$temp_tgl_mulai_ = $temp_tgl_mulai[0];
+			$temp_tgl_mulai[0] = $temp_tgl_mulai[1];
+			$temp_tgl_mulai[1] = $temp_tgl_mulai_;
+
+			$tgl_mulai = implode('/', $temp_tgl_mulai);
+
+			//echo $tgl_mulai; die();
+
+			$temp_tgl_selesai = explode('/', $tgl_selesai);
+			$temp_tgl_selesai_ = $temp_tgl_selesai[0];
+			$temp_tgl_selesai[0] = $temp_tgl_selesai[1];
+			$temp_tgl_selesai[1] = $temp_tgl_selesai_;
+
+			$tgl_selesai = implode('/', $temp_tgl_selesai);
+
+			$time = strtotime($tgl_mulai);
+			$tgl_mulai = date('Y-m-d', $time);
+
+			$time = strtotime($tgl_selesai);
+			$tgl_selesai = date('Y-m-d', $time);
 			
 			//print_r($_FILES);
 			//die();
